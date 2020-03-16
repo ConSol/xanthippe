@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ConSol/xanthippe.git"
   },
-  "author": "Julian Liebich (jliebich@consol.de)",
+  "contributors": ["Marlène Kermani <marlenek@consol.de>","Julian Liebich <jliebich@consol.de>"],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ConSol/xanthippe/issues"
