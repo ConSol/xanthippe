@@ -4,16 +4,22 @@
   "description": "JS testframework playground",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ConSol/xanthippe.git"
   },
-  "contributors": ["Marlène Kermani <marlenek@consol.de>","Julian Liebich <jliebich@consol.de>"],
+  "contributors": [
+    "Marlène Kermani <marlenek@consol.de>",
+    "Julian Liebich <jliebich@consol.de>"
+  ],
   "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/ConSol/xanthippe/issues"
   },
-  "homepage": "https://github.com/ConSol/xanthippe#readme"
+  "homepage": "https://github.com/ConSol/xanthippe#readme",
+  "devDependencies": {
+    "jest": "^25.1.0"
+  }
 }
