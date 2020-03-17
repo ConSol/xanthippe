@@ -1,6 +1,14 @@
 const sampleFunction = require('./say_hello.js');
 
-test("Sample test: Did your password got created?", () => {
-    expect(sampleFunction(7)).toBe(true);
+describe('Test password generation', () => {
+
+    it("Sample test: Did your password got created?", () => {
+        expect(sampleFunction(7)).toBe(true);
+    });
+
+    it("Sample test: Did your password not get created?", () => {
+        expect(sampleFunction(-1)).toBe(false);
+    });
+
 });
 
