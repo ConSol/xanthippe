@@ -1,6 +1,6 @@
-const sayHelloFunction = require('./say_hello.js');
+const sampleFunction = require('./say_hello.js');
 
-test("Sample test: Hello World!", () => {
-    expect(sayHelloFunction()).toBe("Hello World!");
+test("Sample test: Did your password got created?", () => {
+    expect(sampleFunction(7)).toBe(true);
 });
 
