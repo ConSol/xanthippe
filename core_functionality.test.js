@@ -40,7 +40,7 @@ describe('Testing core functionality of xanthippe', () => {
         });
 
         it('Comparing two naive integers, should fail', () => {
-            expect(xant.assertEquals(1,3)).toThrow("test failed");
+            expect(() => xant.assertEquals(1,3)).toThrow();
         });
 
         it('Comparing flat object.', () => {
