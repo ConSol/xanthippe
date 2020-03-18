@@ -37,15 +37,51 @@ function assertIntEquals( description, number1, number2 ){
     let ret = number1 === number2;
     //return performIO( description, ergebnis );
     if(!ret){
-        console.error("...Assertion failed!");
+        console.error("...Assertion failed: " + number1 + " does not equal " + number2);
     } else {
         console.log("... Assertion passed.");
     }
     return ret;
 }
+// TODO:
+//  - naive values
+//  - nested objects
+function assertEquals(value1, value2) {
+    if (typeof (value1) === 'object' && typeof (value2) === 'object') {
+
+        if (Object.keys(value1).length !== Object.keys(value2).length) {
+            return false;
+        }
+
+        for (let [key, value] of Object.entries(value1)) {
+            if (value2[key] === undefined) {
+                return false;
+            } else {
+                if (!assertEquals(value2[key], value)) {
+                    console.error("... Assertion failed: " + value2[key].toString() + " does not equal " + value.toString());
+                    throw "test failed";
+                    //return false;
+                }
+            }
+        }
+
+        console.log("... Assertion passed");
+        return true;
+
+    } else {
+        if ( value1 === value2 ){
+            console.log("... Assertion passed");
+            return true;
+        } else {
+            throw "test failed";
+        }
+        //return value1 === vale2;
+    }
+}
 
 module.exports = {
     performIO,
     assertTrue,
-    assertIntEquals
+    assertIntEquals,
+    assertEquals
 };
