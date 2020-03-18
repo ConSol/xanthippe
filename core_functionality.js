@@ -50,12 +50,13 @@ function assertEquals(value1, value2) {
     if (typeof (value1) === 'object' && typeof (value2) === 'object') {
 
         if (Object.keys(value1).length !== Object.keys(value2).length) {
-            return false;
+            throw "test failed";
         }
 
         for (let [key, value] of Object.entries(value1)) {
             if (value2[key] === undefined) {
-                return false;
+                console.error("... Assertion failed: " + value2[key].toString() + " does not equal " + value.toString());
+                throw "test failed";
             } else {
                 if (!assertEquals(value2[key], value)) {
                     console.error("... Assertion failed: " + value2[key].toString() + " does not equal " + value.toString());

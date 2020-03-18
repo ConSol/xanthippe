@@ -29,4 +29,28 @@ describe('Testing core functionality of xanthippe', () => {
         expect(xant.assertIntEquals('...', 1234, 1235)).toBe(false);
     })
 
+    describe('Testing assertEquals function.', () => {
+
+        it('Comparing two naive string values', () => {
+            expect(xant.assertEquals('hallo','hallo')).toBe(true);
+        });
+
+        it('Comparing two naive integers.', () => {
+            expect(xant.assertEquals(1,1)).toBe(true);
+        });
+
+        it('Comparing two naive integers, should fail', () => {
+            expect(xant.assertEquals(1,3)).toThrow("test failed");
+        });
+
+        it('Comparing flat object.', () => {
+            expect(xant.assertEquals({val1: 1, val2: 2},{val1: 1, val2: 2})).toBe(true);
+        });
+
+        it('Comparing nested object', () => {
+            expect(xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 1}})).toBe(true);
+        });
+
+    });
+
 });
