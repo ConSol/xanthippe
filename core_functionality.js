@@ -20,21 +20,28 @@ function assertTrue(description, fn ){
     } else {
         console.log(`Asserting if function ${fn.name} returns true.`);
     }
-    let ergebnis = fn(); // Boolean
+     // Boolean
     //let ret = performIO(description, ergebnis );
-    let ret = ergebnis;
+    let ret = fn();
     if(!ret){
         console.error("...Assertion failed!");
     } else {
         console.log("... Assertion passed.");
     }
-    return ergebnis;
+    return ret;
 }
 
 // Tests if the two numbers: number1 and number2 are equal.
 function assertIntEquals( description, number1, number2 ){
-    let ergebnis = number1 === number2;
-    return performIO( description, ergebnis );
+    console.log("assertIntEquals: " + description);
+    let ret = number1 === number2;
+    //return performIO( description, ergebnis );
+    if(!ret){
+        console.error("...Assertion failed!");
+    } else {
+        console.log("... Assertion passed.");
+    }
+    return ret;
 }
 
 module.exports = {

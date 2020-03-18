@@ -22,11 +22,11 @@ describe('Testing core functionality of xanthippe', () => {
     });
 
     it('assertIntEquals should return true', () => {
-        expect(xant.assertIntEquals('', 1234, 1234)).toBe(true);
+        expect(xant.assertIntEquals('...', 1234, 1234)).toBe(true);
     })
 
     it('assertIntEquals should return false', () => {
-        expect(xant.assertIntEquals('', 1234, 1235)).toBe(false);
+        expect(xant.assertIntEquals('...', 1234, 1235)).toBe(false);
     })
 
 });
