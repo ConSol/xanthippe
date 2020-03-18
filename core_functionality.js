@@ -1,3 +1,4 @@
+const assert = require('assert');
 
 // performIO( description::String, passed:Boolean) => Boolean
 function performIO(description,isPassed){
@@ -43,10 +44,16 @@ function assertIntEquals( description, number1, number2 ){
     }
     return ret;
 }
+
+function assertEquals( value1, value2){
+    console.log("assertEquals ...");
+    return assert.deepEqual(value1, value2);
+
+}
 // TODO:
 //  - naive values
 //  - nested objects
-function assertEquals(value1, value2) {
+function assertEqualsFn(value1, value2) {
     if (typeof (value1) === 'object' && typeof (value2) === 'object') {
 
         if (Object.keys(value1).length !== Object.keys(value2).length) {
@@ -58,7 +65,7 @@ function assertEquals(value1, value2) {
                 console.error("... Assertion failed: " + value2[key].toString() + " does not equal " + value.toString());
                 throw "test failed";
             } else {
-                if (!assertEquals(value2[key], value)) {
+                if (!assertEqualsFn(value2[key], value)) {
                     console.error("... Assertion failed: " + value2[key].toString() + " does not equal " + value.toString());
                     throw "test failed";
                     //return false;
