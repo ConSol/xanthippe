@@ -15,7 +15,10 @@ describe('Testing core functionality of xanthippe', () => {
     });
 
     it('assertTrue should return true if given function returns true.', () => {
-        expect(xant.assertTrue('should be true', () => {return true;})).toBe(true);
+        const myfn = function(){
+            return false;
+        }
+        expect(xant.assertTrue('should be true', myfn)).toBe(false);
     });
 
     it('assertIntEquals should return true', () => {
