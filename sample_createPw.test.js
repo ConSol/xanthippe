@@ -1,4 +1,4 @@
-const sampleFunction = require('./say_hello.js');
+const sampleFunction = require('./sample_createPw.js');
 
 describe('Test password generation', () => {
 
