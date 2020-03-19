@@ -6,14 +6,6 @@ const xant = require('./core_functionality.js');
 
 describe('Testing core functionality of xanthippe', () => {
 
-    it('performIO should simply return its input values (true).', () => {
-        expect(xant.performIO('',true)).toBe(true);
-    });
-
-    it('performIO should simply return its input values (false).', () => {
-        expect(xant.performIO('',false)).toBe(false);
-    });
-
     it('assertTrue should return true if given function returns true.', () => {
         const myfn = function(){
             return false;
