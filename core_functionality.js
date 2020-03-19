@@ -95,5 +95,6 @@ module.exports = {
     performIO,
     assertTrue,
     assertEquals,
-    testcase
+    testcase,
+    it: testcase
 };
