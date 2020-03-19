@@ -33,9 +33,16 @@ function assertTrue(description, fn ){
 }
 
 function assertEquals( value1, value2){
-    console.log("assertEquals ...");
-    return assert.deepEqual(value1, value2);
-
+    let name1 = value1.name === undefined ? value1 : value1.name;
+    let name2 = value2.name === undefined ? value2 : value2.name;
+    console.log(`asserting equality of ${name1} and ${name2}.`);
+    try {
+    assert.deepEqual(value1, value2);
+    } catch (e){
+        console.error("... Assertion failed!");
+        throw e;
+    }
+    console.log("... Assertion succeded.");
 }
 
 // TODO:

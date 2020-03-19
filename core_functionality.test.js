@@ -24,23 +24,25 @@ describe('Testing core functionality of xanthippe', () => {
     describe('Testing assertEquals function.', () => {
 
         it('Comparing two naive string values', () => {
-            expect(xant.assertEquals('hallo','hallo')).toBe(true);
+            expect(xant.assertEquals('hallo','hallo')).toBeUndefined();
         });
 
         it('Comparing two naive integers.', () => {
-            expect(xant.assertEquals(1,1)).toBe(true);
+            expect(xant.assertEquals(1,1)).toBeUndefined();
         });
 
         it('Comparing two naive integers, should fail', () => {
-            expect(() => xant.assertEquals(1,3)).toThrow();
+            let variable2 = 3;
+            expect(() => xant.assertEquals(1,variable2)).toThrow();
         });
 
         it('Comparing flat object.', () => {
-            expect(xant.assertEquals({val1: 1, val2: 2},{val1: 1, val2: 2})).toBe(true);
+            let object2 = {val1: 1, val2: 2};
+            expect(xant.assertEquals({val1: 1, val2: 2}, object2)).toBeUndefined();
         });
 
         it('Comparing nested object', () => {
-            expect(xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 1}})).toBe(true);
+            expect(xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 1}})).toBeUndefined();
         });
 
     });
