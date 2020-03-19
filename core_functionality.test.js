@@ -63,6 +63,17 @@ describe('Testing core functionality of xanthippe', () => {
             }).toThrow();
         });
 
+        it('testcase: nested tests.', () => {
+            expect(xant.testcase('Testing equality of numbers', () => {
+                xant.testcase('1 should be 1', () => {
+                    xant.assertEquals(1,1);
+                });
+                xant.testcase('2 should be 2', () => {
+                    xant.assertEquals(2,2);
+                });
+            })).toBeUndefined();
+        })
+
     });
 
 });
