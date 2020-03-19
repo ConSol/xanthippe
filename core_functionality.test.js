@@ -45,6 +45,10 @@ describe('Testing core functionality of xanthippe', () => {
             expect(xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 1}})).toBeUndefined();
         });
 
+        it('Comparing nested object', () => {
+            expect(() => xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 2}})).toThrow();
+        });
+
     });
 
 });

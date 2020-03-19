@@ -32,14 +32,13 @@ function assertTrue(description, fn ){
     return ret;
 }
 
-function assertEquals( value1, value2){
-    let name1 = value1.name === undefined ? value1 : value1.name;
-    let name2 = value2.name === undefined ? value2 : value2.name;
-    console.log(`asserting equality of ${name1} and ${name2}.`);
+function assertEquals(value1, value2) {
+    console.log(`asserting equality of ${value1} and ${value2}.`);
     try {
-    assert.deepEqual(value1, value2);
-    } catch (e){
-        console.error("... Assertion failed!");
+        assert.deepEqual(value1, value2);
+    } catch (e) {
+        console.error("... Assertion failed!" + e);
+        
         throw e;
     }
     console.log("... Assertion succeded.");
