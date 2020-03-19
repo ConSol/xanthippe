@@ -32,24 +32,12 @@ function assertTrue(description, fn ){
     return ret;
 }
 
-// Tests if the two numbers: number1 and number2 are equal.
-function assertIntEquals( description, number1, number2 ){
-    console.log("assertIntEquals: " + description);
-    let ret = number1 === number2;
-    //return performIO( description, ergebnis );
-    if(!ret){
-        console.error("...Assertion failed: " + number1 + " does not equal " + number2);
-    } else {
-        console.log("... Assertion passed.");
-    }
-    return ret;
-}
-
 function assertEquals( value1, value2){
     console.log("assertEquals ...");
     return assert.deepEqual(value1, value2);
 
 }
+
 // TODO:
 //  - naive values
 //  - nested objects
@@ -90,6 +78,5 @@ function assertEqualsFn(value1, value2) {
 module.exports = {
     performIO,
     assertTrue,
-    assertIntEquals,
     assertEquals
 };

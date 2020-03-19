@@ -21,14 +21,6 @@ describe('Testing core functionality of xanthippe', () => {
         expect(xant.assertTrue('should be true', myfn)).toBe(false);
     });
 
-    it('assertIntEquals should return true', () => {
-        expect(xant.assertIntEquals('...', 1234, 1234)).toBe(true);
-    })
-
-    it('assertIntEquals should return false', () => {
-        expect(xant.assertIntEquals('...', 1234, 1235)).toBe(false);
-    })
-
     describe('Testing assertEquals function.', () => {
 
         it('Comparing two naive string values', () => {
