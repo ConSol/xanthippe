@@ -38,7 +38,6 @@ function assertEquals(value1, value2) {
         assert.deepEqual(value1, value2);
     } catch (e) {
         console.error("... Assertion failed!" + e);
-        
         throw e;
     }
     console.log("... Assertion succeded.");
