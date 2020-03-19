@@ -34,13 +34,24 @@ function assertTrue(description, fn ){
 
 function assertEquals(value1, value2) {
     console.log(`asserting equality of ${value1} and ${value2}.`);
-    try {
+    //try {
         assert.deepEqual(value1, value2);
-    } catch (e) {
-        console.error("... Assertion failed!" + e);
+    //} catch (e) {
+        //console.error("... Assertion failed!" + e);
+        //throw e;
+    //}
+    //console.log("... Assertion succeded.");
+}
+
+function testcase(description, callback){
+    console.log('Running test: ' + description);
+    try {
+        callback();
+    } catch (e){
+        console.error("... test failed!");
         throw e;
     }
-    console.log("... Assertion succeded.");
+    console.log("... test succeeded");
 }
 
 // TODO:
@@ -83,5 +94,6 @@ function assertEqualsFn(value1, value2) {
 module.exports = {
     performIO,
     assertTrue,
-    assertEquals
+    assertEquals,
+    testcase
 };
