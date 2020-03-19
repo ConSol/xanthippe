@@ -33,7 +33,7 @@ function assertTrue(description, fn ){
 }
 
 function assertEquals(value1, value2) {
-    console.log(`asserting equality of ${value1} and ${value2}.`);
+    //console.log(`asserting equality of ${value1} and ${value2}.`);
     //try {
         assert.deepEqual(value1, value2);
     //} catch (e) {

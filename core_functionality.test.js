@@ -66,22 +66,39 @@ describe('Testing core functionality of xanthippe', () => {
         });
 
         it('should correctly fail the assertion, that 1 and 2 are equal.', () => {
-            expect(() => {
-                xant.testcase('1 should not equal 2', () => {
-                    xant.assertEquals(1,2);
-                })
-            }).toThrow();
+            // GIVEN
+            const testFunction = () => {
+                xant.assertEquals(1,2);
+            }
+
+            // WHEN
+            const SUT = () => {
+                xant.testcase('1 should not equal 2', testFunction);
+            }
+
+            // THEN
+            expect(SUT).toThrow();
         });
 
         it('nested tests.', () => {
-            expect(xant.testcase('Testing equality of numbers', () => {
-                xant.testcase('1 should be 1', () => {
-                    xant.assertEquals(1,1);
+            // GIVEN
+            const testFunction1 = () => {
+                xant.assertEquals(1,1);
+            }
+            const testFunction2 = () => {
+                xant.assertEquals(2,2);
+            }
+
+            // WHEN
+            const SUT = () => {
+                xant.testcase('Numbers should be equal.', () => {
+                    xant.testcase('1 should equal 1', testFunction1);
+                    xant.testcase('2 should equal 2', testFunction2);
                 });
-                xant.testcase('2 should be 2', () => {
-                    xant.assertEquals(2,2);
-                });
-            })).toBeUndefined();
+            }
+
+            // THEN
+            expect(SUT).not.toThrow();
         })
 
     });
