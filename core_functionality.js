@@ -1,26 +1,4 @@
-const assert = require('assert');
-
-// assertTrue( description::String, (function() => Boolean) ) => Boolean
-// Tests if function fn returns true or not.
-function assertTrue(description, fn ){
-    console.log("assertTrue: " + description);
-    if( fn.name === undefined){
-        console.log("Asserting if anonymous function returns true");
-    } else {
-        console.log(`Asserting if function ${fn.name} returns true.`);
-    }
-    let ret = fn();
-    if(!ret){
-        console.error("...Assertion failed!");
-    } else {
-        console.log("... Assertion passed.");
-    }
-    return ret;
-}
-
-function assertEquals(value1, value2) {
-        assert.deepEqual(value1, value2);
-}
+const xant_assert = require('./assertions.js');
 
 function testcase(description, callback){
     console.log('Running test: ' + description);
@@ -34,8 +12,8 @@ function testcase(description, callback){
 }
 
 module.exports = {
-    assertTrue,
-    assertEquals,
+    assertEquals: xant_assert.assertEquals,
+    assertTrue: xant_assert.assertTrue,
     testcase,
     it: testcase
 };

@@ -10,7 +10,7 @@ describe('Testing core functionality of xanthippe', () => {
         const myfn = function(){
             return false;
         }
-        expect(xant.assertTrue('should be true', myfn)).toBe(false);
+        expect(() => xant.assertTrue('should be true', myfn)).toThrow();
     });
 
     describe('Testing assertEquals function.', () => {
