@@ -4,10 +4,17 @@ const xant = require('./core_functionality.js');
 //     expect(testFunction("2 + 2 = 4", 2 + 2 === 4)).toBe(true);
 // });
 
+//console.log = jest.fn();
+console.log = jest.spyOn(console, 'log');
+
+beforeEach(() => {
+    jest.resetAllMocks();
+});
+
 describe('Testing core functionality of xanthippe', () => {
 
     it('assertTrue should return true if given function returns true.', () => {
-        const myfn = function(){
+        const myfn = function () {
             return false;
         }
         expect(() => xant.assertTrue('should be true', myfn)).toThrow();
@@ -16,29 +23,29 @@ describe('Testing core functionality of xanthippe', () => {
     describe('Testing assertEquals function.', () => {
 
         it('Comparing two naive string values', () => {
-            expect(xant.assertEquals('hallo','hallo')).toBeUndefined();
+            expect(xant.assertEquals('hallo', 'hallo')).toBeUndefined();
         });
 
         it('Comparing two naive integers.', () => {
-            expect(xant.assertEquals(1,1)).toBeUndefined();
+            expect(xant.assertEquals(1, 1)).toBeUndefined();
         });
 
         it('Comparing two naive integers, should fail', () => {
             let variable2 = 3;
-            expect(() => xant.assertEquals(1,variable2)).toThrow();
+            expect(() => xant.assertEquals(1, variable2)).toThrow();
         });
 
         it('Comparing flat object.', () => {
-            let object2 = {val1: 1, val2: 2};
-            expect(xant.assertEquals({val1: 1, val2: 2}, object2)).toBeUndefined();
+            let object2 = { val1: 1, val2: 2 };
+            expect(xant.assertEquals({ val1: 1, val2: 2 }, object2)).toBeUndefined();
         });
 
         it('Comparing nested object', () => {
-            expect(xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 1}})).toBeUndefined();
+            expect(xant.assertEquals({ val1: 1, val2: { val: 1 } }, { val1: 1, val2: { val: 1 } })).toBeUndefined();
         });
 
         it('Comparing nested object', () => {
-            expect(() => xant.assertEquals({val1: 1, val2: {val: 1}},{ val1: 1, val2: {val: 2}})).toThrow();
+            expect(() => xant.assertEquals({ val1: 1, val2: { val: 1 } }, { val1: 1, val2: { val: 2 } })).toThrow();
         });
     });
 
@@ -47,7 +54,7 @@ describe('Testing core functionality of xanthippe', () => {
         it('should correctly assert the equality of 1 and 1.', () => {
             // GIVEN
             const testFunction = () => {
-                xant.assertEquals(1,1);
+                xant.assertEquals(1, 1);
             };
 
             // WHEN
@@ -55,12 +62,15 @@ describe('Testing core functionality of xanthippe', () => {
 
             // THEN
             expect(SUT).not.toThrow();
+            expect(console.log).toHaveBeenCalledWith("Running test: 1 should equal 1");
+            expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+            expect(console.log).toHaveBeenCalledTimes(2);
         });
 
         it('should correctly fail the assertion, that 1 and 2 are equal.', () => {
             // GIVEN
             const testFunction = () => {
-                xant.assertEquals(1,2);
+                xant.assertEquals(1, 2);
             }
 
             // WHEN
@@ -70,15 +80,16 @@ describe('Testing core functionality of xanthippe', () => {
 
             // THEN
             expect(SUT).toThrow();
+            expect(console.log.mock.calls[0][0]).toBe("Running test: 1 should not equal 2");
         });
 
         it('nested tests.', () => {
             // GIVEN
             const testFunction1 = () => {
-                xant.assertEquals(1,1);
+                xant.assertEquals(1, 1);
             }
             const testFunction2 = () => {
-                xant.assertEquals(2,2);
+                xant.assertEquals(2, 2);
             }
 
             // WHEN
