@@ -31,3 +31,7 @@ function expect(argument) {
     }
     return obj;
 };
+
+module.exports = {
+    expect
+};
