@@ -1,11 +1,9 @@
 const xant = require('./core_functionality.js');
 
-// test("Sample test: Hello World!", () => {
-//     expect(testFunction("2 + 2 = 4", 2 + 2 === 4)).toBe(true);
-// });
 
-//console.log = jest.fn();
-console.log = jest.spyOn(console, 'log');
+console.log = jest.fn();
+console.error = jest.fn();
+//console.log = jest.spyOn(console, 'log');
 
 beforeEach(() => {
     jest.resetAllMocks();
@@ -30,6 +28,8 @@ describe('xant.testcase: ', () => {
         expect(console.log).toHaveBeenCalledTimes(2);
     });
 
+
+
     it('should correctly fail the assertion, that 1 and 2 are equal.', () => {
         // GIVEN
         const testFunction = () => {
@@ -43,8 +43,10 @@ describe('xant.testcase: ', () => {
 
         // THEN
         expect(SUT).toThrow();
-        expect(console.log.mock.calls[0][0]).toBe("Running test: 1 should not equal 2");
+        expect(console.log).toHaveBeenCalledWith("Running test: 1 should not equal 2");
+        expect(console.error).toHaveBeenLastCalledWith("... test failed!");
     });
+
 
     it('nested tests.', () => {
         // GIVEN
@@ -65,6 +67,13 @@ describe('xant.testcase: ', () => {
 
         // THEN
         expect(SUT).not.toThrow();
+        expect(console.log).toHaveBeenCalledWith("Running test: Numbers should be equal.");
+        expect(console.log).toHaveBeenCalledWith("Running test: 1 should equal 1");
+        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+        expect(console.log).toHaveBeenCalledWith("Running test: 2 should equal 2");
+        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+        expect(console.log).toHaveBeenCalledTimes(6);
     })
 
 });
