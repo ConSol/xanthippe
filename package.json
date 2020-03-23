@@ -1,6 +1,9 @@
 {
   "name": "xanthippe",
   "version": "1.0.0",
+  "bin": {
+    "xanthippe": "./cli.js"
+  },
   "description": "JS testframework playground",
   "main": "index.js",
   "scripts": {
