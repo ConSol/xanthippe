@@ -11,7 +11,7 @@ let index = 0;
 
 //Log
 console.log("Xanthippe starting...");
-console.log(`Input parameters: `);
+console.log(`Test scripts: `);
 args.forEach(element => {
     index++;
     console.log(` ${index}: ${element}`)
