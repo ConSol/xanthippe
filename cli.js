@@ -25,8 +25,19 @@ args.forEach(filepath => {
     const code = fs.readFileSync(filepath, 'utf-8');
     //console.log(code);
     //const script = new vm.Script(code);
-    const context = {xant : xant, console: console};
+    const context = createXantContext({console: console, require: require});
     vm.createContext(context);
     vm.runInContext(code, context);
     //console.log(context);
 });
+
+function createXantContext(obj){
+    //console.log(xant);
+    //let obj = {};
+    for ( let [key, elem] of Object.entries(xant) ){
+        //console.log(key);
+        obj[key] = elem;
+    }
+    return obj;
+}
+//console.log( createXantContext({}) );
