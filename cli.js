@@ -4,8 +4,6 @@ const vm = require('vm');
 const xant = require('./core_functionality.js');
 const fs = require('fs');
 
-//global.xant = xant;
-
 const context = {};
 //Arguments
 const [,, ... args] = process.argv;
@@ -23,21 +21,7 @@ args.forEach(element => {
 args.forEach(filepath => {
     console.log('Running testsuite: ' + filepath);
     const code = fs.readFileSync(filepath, 'utf-8');
-    //console.log(code);
-    //const script = new vm.Script(code);
-    const context = createXantContext({console: console, require: require});
+    const context = { ...{console: console, require: require}, ...xant };
     vm.createContext(context);
     vm.runInContext(code, context);
-    //console.log(context);
 });
-
-function createXantContext(obj){
-    //console.log(xant);
-    //let obj = {};
-    for ( let [key, elem] of Object.entries(xant) ){
-        //console.log(key);
-        obj[key] = elem;
-    }
-    return obj;
-}
-//console.log( createXantContext({}) );
