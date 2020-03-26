@@ -37,7 +37,7 @@ describe('xant.expect', () => {
     });
 
     it('not not to be', () => {
-        expect(() => {xant.expect(1).not().not().not().not().toBe(2)}).toThrow();
+        expect(() => {xant.expect(1).not().not().not().toBe(2)}).toThrow();
     });
 
 });
