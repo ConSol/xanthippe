@@ -3,7 +3,7 @@
 //Arguments
 const [,, ... args] = process.argv;
 let index = 0;
-
+abcdefgh
 //Log
 console.log("Xanthippe starting...");
 console.log(`Input parameters: `);
