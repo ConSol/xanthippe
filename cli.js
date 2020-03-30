@@ -7,22 +7,34 @@ const chalk = require('chalk');
 
 const context = {};
 //Arguments
-const [,, ... args] = process.argv;
+const [, , ...args] = process.argv;
 let index = 0;
 
 //Log
 console.log("Xanthippe starting...");
 console.log(`Test scripts: `);
+
+let filepaths = [];
+
 args.forEach(element => {
-    index++;
-    console.log(` ${index}: ${element}`)
-    
+    try {
+        const stat = fs.statSync(element);
+        if (!stat.isDirectory()) {
+            index++;
+            filepaths.push(element);
+            console.log(` ${index}: ${element}`);
+        } else {
+            console.error(chalk.red(`${element} is a directory`));
+        }
+    } catch (e) {
+        console.error(chalk.red(`file ${element} does not exist`));
+    }
 });
 
-args.forEach(filepath => {
+filepaths.forEach(filepath => {
     console.log('Running testsuite: ' + filepath);
     const code = fs.readFileSync(filepath, 'utf-8');
-    const context = { ...{console: console, require: require}, ...xant };
+    const context = { ...{ console: console, require: require }, ...xant };
     vm.createContext(context);
     try {
         vm.runInContext(code, context);
