@@ -3,6 +3,7 @@
 const vm = require('vm');
 const xant = require('./core_functionality.js');
 const fs = require('fs');
+const chalk = require('chalk');
 
 const context = {};
 //Arguments
@@ -23,5 +24,10 @@ args.forEach(filepath => {
     const code = fs.readFileSync(filepath, 'utf-8');
     const context = { ...{console: console, require: require}, ...xant };
     vm.createContext(context);
-    vm.runInContext(code, context);
+    try {
+        vm.runInContext(code, context);
+        console.log(chalk.green('... Testsuite passed correctly.'));
+    } catch (e) {
+        console.error(chalk.magenta(e.stack));
+    }
 });
