@@ -14,15 +14,14 @@ describe('xant.testcase: ', () => {
 
     it('should correctly assert the equality of 1 and 1.', () => {
         // GIVEN
-        const testFunction = () => {
-            xant.assertEquals(1, 1);
-        };
+        const testFunction = jest.fn();
 
         // WHEN
         const SUT = () => xant.testcase('1 should equal 1', testFunction);
 
         // THEN
         expect(SUT).not.toThrow();
+        expect(testFunction).toHaveBeenCalled();
         expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Running test: 1 should equal 1"));
         expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining("... test succeeded"));
         expect(console.log).toHaveBeenCalledTimes(2);
