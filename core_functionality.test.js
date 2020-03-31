@@ -23,8 +23,8 @@ describe('xant.testcase: ', () => {
 
         // THEN
         expect(SUT).not.toThrow();
-        expect(console.log).toHaveBeenCalledWith("Running test: 1 should equal 1");
-        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+        expect(console.log).toHaveBeenCalledWith(expect.stringContaining("Running test: 1 should equal 1"));
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining("... test succeeded"));
         expect(console.log).toHaveBeenCalledTimes(2);
     });
 
@@ -44,7 +44,7 @@ describe('xant.testcase: ', () => {
         // THEN
         expect(SUT).toThrow();
         expect(console.log).toHaveBeenCalledWith("Running test: 1 should not equal 2");
-        expect(console.error).toHaveBeenLastCalledWith("... test failed!");
+        expect(console.error).toHaveBeenLastCalledWith(expect.stringContaining("... test failed!"));
     });
 
 
@@ -69,10 +69,10 @@ describe('xant.testcase: ', () => {
         expect(SUT).not.toThrow();
         expect(console.log).toHaveBeenCalledWith("Running test: Numbers should be equal.");
         expect(console.log).toHaveBeenCalledWith("Running test: 1 should equal 1");
-        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining("... test succeeded"));
         expect(console.log).toHaveBeenCalledWith("Running test: 2 should equal 2");
-        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
-        expect(console.log).toHaveBeenLastCalledWith("... test succeeded");
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining("... test succeeded"));
+        expect(console.log).toHaveBeenLastCalledWith(expect.stringContaining("... test succeeded"));
         expect(console.log).toHaveBeenCalledTimes(6);
     })
 
