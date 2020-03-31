@@ -41,5 +41,6 @@ filepaths.forEach(filepath => {
         console.log(chalk.green('... Testsuite passed correctly.'));
     } catch (e) {
         console.error(chalk.magenta(e.stack));
+        break;
     }
 });
