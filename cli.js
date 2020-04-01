@@ -14,14 +14,14 @@ let index = 0;
 console.log("Xanthippe starting...");
 console.log(`Test scripts: `);
 
-let filepaths = [];
+let testfiles = [];
 
 args.forEach(element => {
     try {
         const stat = fs.statSync(element);
         if (!stat.isDirectory()) {
             index++;
-            filepaths.push(element);
+            testfiles.push(element);
             console.log(` ${index}: ${element}`);
         } else {
             console.error(chalk.red(`${element} is a directory`));
@@ -31,7 +31,7 @@ args.forEach(element => {
     }
 });
 
-filepaths.forEach(filepath => {
+testfiles.forEach(filepath => {
     console.log('Running testsuite: ' + filepath);
     const code = fs.readFileSync(filepath, 'utf-8');
     const context = { ...{ console: console, require: require }, ...xant };
@@ -41,6 +41,5 @@ filepaths.forEach(filepath => {
         console.log(chalk.green('... Testsuite passed correctly.'));
     } catch (e) {
         console.error(chalk.magenta(e.stack));
-        break;
     }
 });
