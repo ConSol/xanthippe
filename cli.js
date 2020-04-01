@@ -34,20 +34,35 @@ if(args.length == 0){
 })}
 
 
+
+
+//Checking if directory or file and filtering testing files
 args.forEach(element => {
     try {
         const stat = fs.statSync(element);
-        if (!stat.isDirectory()) {
+        if (stat.isDirectory()) {
+            const files = fs.readdirSync(element);
+            files.forEach(filename => {
+                if(filename.includes(".xtest.js")){
+                index++;
+                testfiles.push(element + "/" + filename);
+                console.log(` ${index}: ${filename}`);}
+                else{
+                    console.log(`${filename} not a testing file`)
+                }
+            });
+        } else {
+            //run only file
             index++;
             testfiles.push(element);
             console.log(` ${index}: ${element}`);
-        } else {
-            console.error(chalk.red(`${element} is a directory`));
         }
     } catch (e) {
         console.error(chalk.red(`file ${element} does not exist`));
     }
-});
+})
+
+console.log(testfiles);
 
 testfiles.forEach(filepath => {
     console.log('Running testsuite: ' + filepath);
