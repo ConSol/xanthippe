@@ -16,6 +16,24 @@ console.log(`Test scripts: `);
 
 let testfiles = [];
 
+//--recursive, -r flag
+if(args.length == 0){
+    args.push(process.cwd());
+} else { args.forEach(element => {
+    if(element === '--recursion'){
+        console.log(args);
+        const index = args.indexOf(element)
+        args.splice(index,1);
+        console.log(args);
+        //code for recursion...
+        console.log("Recursion wanted");
+        if(args.length == 0){
+            args.push(process.cwd());
+        } 
+    }
+})}
+
+
 args.forEach(element => {
     try {
         const stat = fs.statSync(element);
