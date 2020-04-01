@@ -1,4 +1,5 @@
 const fs = require('fs');
+
 //function for listing directory recursively
 function listDirRec(path) {
     let paths = [];
@@ -14,4 +15,5 @@ function listDirRec(path) {
     });
     return paths;
 }
+
 exports.listDirRec = listDirRec;
