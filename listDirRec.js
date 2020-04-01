@@ -13,6 +13,7 @@ function listDirRec(path) {
             paths = [...paths, ...listDirRec(path + "/" + element)];
         }
     });
+    console.log(paths)
     return paths;
 }
 
