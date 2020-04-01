@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
+const { listDirRec } = require("./listDirRec");
+
 const vm = require('vm');
 const xant = require('./core_functionality.js');
 const fs = require('fs');
@@ -16,20 +18,18 @@ console.log(`Test scripts: `);
 
 let testfiles = [];
 
-//--recursive, -r flag
+//Checking for --recursive, -r flag
 if(args.length == 0){
     args.push(process.cwd());
 } else { args.forEach(element => {
-    if(element === '--recursion'){
-        console.log(args);
+    if(element === '--recursive'){
         const index = args.indexOf(element)
         args.splice(index,1);
-        console.log(args);
-        //code for recursion...
         console.log("Recursion wanted");
         if(args.length == 0){
             args.push(process.cwd());
         } 
+        args.push(listDirRec(args));
     }
 })}
 
