@@ -34,8 +34,6 @@ if(args.length == 0){
 })}
 
 
-
-
 //Checking if directory or file and filtering testing files
 args.forEach(element => {
     try {
@@ -62,8 +60,7 @@ args.forEach(element => {
     }
 })
 
-console.log(testfiles);
-
+//Execute xanthippe on testfiles
 testfiles.forEach(filepath => {
     console.log('Running testsuite: ' + filepath);
     const code = fs.readFileSync(filepath, 'utf-8');
