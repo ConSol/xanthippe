@@ -9,7 +9,7 @@ const chalk = require('chalk');
 
 const context = {};
 //Arguments
-const [, , ...args] = process.argv;
+let [, , ...args] = process.argv;
 let index = 0;
 
 //Log
@@ -29,8 +29,8 @@ if(args.length == 0){
         if(args.length == 0){
             args.push(process.cwd());
         } 
-        console.log(listDirRec(args[0]));
-        args.concat(listDirRec(args[0]));
+        args = listDirRec(args[0]);
+        console.log(args)
     }
 })}
 
@@ -52,10 +52,10 @@ args.forEach(element => {
             });
         } else {
             //run only file
-            index++;
-            testfiles.push(element);
-            console.log(` ${index}: ${element}`);
-        }
+            if(element.includes(".xtest.js")){
+                index++;
+                testfiles.push(element);
+        }}
     } catch (e) {
         console.error(chalk.red(`file ${element} does not exist`));
     }
