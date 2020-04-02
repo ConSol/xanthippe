@@ -12,5 +12,20 @@ describe("listDirRec", () => {
 
         //THEN
         expect(result).toEqual(expectedListOutput);
-    })
+    });
+
+    it("should return all filepaths in <a> directory", () => {
+        //GIVEN
+        const absolutePathToTestFolder = join(__dirname, "cli_test_files" , "subfolder");
+        const expectedListOutput = [
+            "cli_test_files/subfolder/test_2_cli.js" ,
+            "cli_test_files/subfolder/test_2_cli.xtest.js"
+        ];
+
+        //WHEN
+        const result = listDirRec(absolutePathToTestFolder);
+
+        //THEN
+        expect(result).toEqual(expectedListOutput);
+    });
 })
