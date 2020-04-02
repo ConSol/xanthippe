@@ -30,7 +30,6 @@ if(args.length == 0){
         if(args.length == 0){
             args.push(process.cwd());
         } 
-        // console.log(listDirRec(args[0]));
         testfiles = listDirRec(args[0]);
         console.log(args);
     } else {
@@ -62,7 +61,7 @@ if(args.length == 0){
 
 //Checking if directory or file and filtering testing files
 
-//
+// At this point we expect only file paths.
 const lastfiles = [];
 testfiles.forEach((filename) => {
     if(filename.includes(".xtest.js")){
