@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { join } = require("path");
 
 //function for listing directory recursively
 function listDirRec(path) {
@@ -7,10 +8,10 @@ function listDirRec(path) {
     directoryContent.forEach((element) => {
         const stat = fs.statSync(path + "/" + element);
         if (!stat.isDirectory()) {
-            paths.push(path + "/" + element);
+            paths.push(join(path, element));
         }
         else {
-            paths = [...paths, ...listDirRec(path + "/" + element)];
+            paths = [...paths, ...listDirRec(join(path, element))];
         }
     });
     console.log(paths)
