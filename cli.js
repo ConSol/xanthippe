@@ -29,7 +29,8 @@ if(args.length == 0){
         if(args.length == 0){
             args.push(process.cwd());
         } 
-        args.push(listDirRec(args));
+        console.log(listDirRec(args[0]));
+        args.concat(listDirRec(args[0]));
     }
 })}
 
