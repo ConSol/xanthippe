@@ -3,6 +3,7 @@ const { join } = require("path");
 
 //function for listing directory recursively
 function listDirRec(path) {
+    console.log(path)
     let paths = [];
     let directoryContent = fs.readdirSync(path);
     directoryContent.forEach((element) => {
