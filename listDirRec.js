@@ -14,7 +14,6 @@ function listDirRec(path) {
             paths = [...paths, ...listDirRec(join(path, element))];
         }
     });
-    console.log(paths)
     return paths;
 }
 
