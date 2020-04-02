@@ -20,14 +20,14 @@ console.log(`Test scripts: `);
 let testfiles = [];
 
 //Checking for --recursive, -r flag
-if(args.length == 0){
+if(args.length === 0){
     args.push(process.cwd());
 } else { args.forEach(element => {
     if(element === '--recursive'){
         const index = args.indexOf(element)
         args.splice(index,1);
         console.log("Recursion wanted");
-        if(args.length == 0){
+        if(args.length === 0){
             args.push(process.cwd());
         } 
         testfiles = listDirRec(args[0]);
