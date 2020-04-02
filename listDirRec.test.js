@@ -14,7 +14,7 @@ describe("listDirRec", () => {
         expect(result).toEqual(expectedListOutput);
     });
 
-    it("should return all filepaths in <a> directory", () => {
+    it("should return all filepaths in a non empty subfolder", () => {
         //GIVEN
         const absolutePathToTestFolder = join("cli_test_files" , "subfolder");
         const expectedListOutput = [];
@@ -28,4 +28,23 @@ describe("listDirRec", () => {
         //THEN
         expect(result).toEqual(expectedListOutput);
     });
+
+    it("should return all subfolders and filepaths in a directory ", () => {
+         //GIVEN
+         const absolutePathToTestFolder = join("cli_test_files");
+         const expectedListOutput = [];
+         expectedListOutput.push(join("cli_test_files","subfolder","test_2_cli.js"));
+         expectedListOutput.push(join("cli_test_files","subfolder","test_2_cli.xtest.js"));
+         expectedListOutput.push(join("cli_test_files", "test_2_cli.js"));
+         expectedListOutput.push(join("cli_test_files", "test_2_cli.xtest.js"));
+         expectedListOutput.push(join("cli_test_files", "test_cli.js"));
+         expectedListOutput.push(join("cli_test_files", "test_cli.xtest.js"));
+ 
+ 
+         //WHEN
+         const result = listDirRec(absolutePathToTestFolder);
+ 
+         //THEN
+         expect(result).toEqual(expectedListOutput);
+    })
 })
