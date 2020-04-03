@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 
-const { listDirRec } = require("./listDirRec");
-
+const { listDirRec } = require("./listDir");
 
 const fs = require('fs');
 const chalk = require('chalk');
@@ -42,8 +41,8 @@ if (args.length === 0) {
                 try {
                     const stat = fs.statSync(element);
                     if (stat.isDirectory()) {
-                        const files = fs.readdirSync(join(element));
-                        files.forEach((filename) => {
+                        const tempfiles = fs.readdirSync(join(element));
+                        tempfiles.forEach((filename) => {
                             const stat2 = fs.statSync(join(element, filename));
                             if (!stat2.isDirectory()) {
                                 files.push(join(element, filename));
@@ -62,7 +61,7 @@ if (args.length === 0) {
             });
         }
         ////
-    })
+    });
 }
 
 
