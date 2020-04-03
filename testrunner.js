@@ -24,7 +24,7 @@ function getCanonicalPaths(pathlist) {
 function filterTestfiles(files) {
     const filteredfiles = [];
     files.forEach((filename, index) => {
-        if (filename.includes(".xtest.js")) {
+        if (filename.match(/\.xtest\.js$/)) {
             filteredfiles.push(filename);
         }
         else {

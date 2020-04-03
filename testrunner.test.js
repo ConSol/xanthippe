@@ -28,7 +28,8 @@ describe('filterTestFiles', () => {
             'some/paths.xtest.js',
             'some.xtest/paths.js',
             'path.xtest.js',
-            'path.xtest.txt.js'
+            'path.xtest.txt.js',
+            'path.xtest.js/hallo'
         ];
 
         //WHEN
