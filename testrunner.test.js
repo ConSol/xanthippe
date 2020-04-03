@@ -2,7 +2,7 @@ const { runFiles, filterTestfiles, getCanonicalPaths } = require('./testrunner')
 
 describe('getCanonicalPaths', () => {
 
-    it('', () => {
+    it('should return all filepaths under cli_test_files', () => {
         //GIVEN
         const inputPaths = ['cli_test_files'];
 
@@ -18,4 +18,5 @@ describe('getCanonicalPaths', () => {
         //THEN
         expect(result).toEqual(expectedPaths);
     });
+    
 });
