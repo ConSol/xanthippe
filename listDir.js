@@ -3,7 +3,6 @@ const { join } = require("path");
 
 //function for listing directory recursively
 function listDir(path, recurse = false) {
-    console.log(path)
     let paths = [];
     let directoryContent = fs.readdirSync(path);
     directoryContent.forEach((element) => {
@@ -13,7 +12,7 @@ function listDir(path, recurse = false) {
         }
         else {
             if(recurse){
-                paths = [...paths, ...listDir(join(path, element))];
+                paths = [...paths, ...listDir(join(path, element), true)];
             }
         }
     });
