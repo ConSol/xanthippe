@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-const { listDirRec } = require("./listDir");
+const { listDir } = require("./listDir");
 
 const fs = require('fs');
 const chalk = require('chalk');
@@ -33,7 +33,7 @@ if (args.length === 0) {
             if (args.length === 0) {
                 args = addDefaultDir(args);
             }
-            files = listDirRec(args[0]);
+            files = listDir(args[0],true);
             console.log(args);
         } else {
             ////
