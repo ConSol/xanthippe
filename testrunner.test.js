@@ -18,5 +18,27 @@ describe('getCanonicalPaths', () => {
         //THEN
         expect(result).toEqual(expectedPaths);
     });
-    
+});
+
+describe('filterTestFiles', () => {
+    it('should filter out all filepaths without the xtest extension', () => {
+        //GIVEN
+        const paths = [
+            'some/paths.js',
+            'some/paths.xtest.js',
+            'some.xtest/paths.js',
+            'path.xtest.js',
+            'path.xtest.txt.js'
+        ];
+
+        //WHEN
+        const result = filterTestfiles(paths);
+        const expectedPaths = [
+            'some/paths.xtest.js',
+            'path.xtest.js'
+        ];
+
+        //THEN
+        expect(result).toEqual(expectedPaths);
+    });
 });
