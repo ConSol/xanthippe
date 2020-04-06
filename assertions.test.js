@@ -28,7 +28,7 @@ describe('Testing assertions', () => {
             const SUT = () => xant.assertEquals('hallo', 'hallo');
 
             // THEN
-            expect(SUT()).toBeUndefined();
+            expect(SUT).not.toThrow();
         });
 
         it('Comparing two naive integers.', () => {
@@ -38,7 +38,7 @@ describe('Testing assertions', () => {
             const SUT = () => xant.assertEquals(1, 1);
 
             // THEN
-            expect(SUT()).toBeUndefined();
+            expect(SUT).not.toThrow();
         });
 
         it('Comparing two naive integers, should fail', () => {
@@ -60,7 +60,7 @@ describe('Testing assertions', () => {
             const SUT = () => xant.assertEquals({ val1: 1, val2: 2 }, object2);
 
             // THEN
-            expect(SUT()).toBeUndefined();
+            expect(SUT).not.toThrow();
         });
 
         it('Comparing nested object', () => {
@@ -73,7 +73,7 @@ describe('Testing assertions', () => {
 
             // THEN
 
-            expect(SUT()).toBeUndefined();
+            expect(SUT).not.toThrow();
         });
 
         it('Comparing nested object', () => {

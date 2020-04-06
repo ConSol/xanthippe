@@ -1,15 +1,16 @@
 const xant_assert = require('./assertions.js');
 const xant_expect = require('./expect.js');
+const chalk = require('chalk');
 
 function testcase(description, callback){
     console.log('Running test: ' + description);
     try {
         callback();
     } catch (e){
-        console.error("... test failed!");
+        console.error(chalk.red.inverse.bold("... test failed!"));
         throw e;
     }
-    console.log("... test succeeded");
+    console.log(chalk.green.inverse.bold("... test succeeded"));
 }
 
 module.exports = {
