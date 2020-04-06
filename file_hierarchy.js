@@ -28,7 +28,9 @@ function mkdir(dirname, callback) {
     }
 
     callback();
+    const ret = this.PWD;
     this.PWD = oldpwd;
+    return ret;
 }
 
 function touch(filename, text = 'hallo') {
