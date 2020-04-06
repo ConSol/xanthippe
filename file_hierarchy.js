@@ -2,72 +2,68 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-function mkdir(dirname, callback) {
-    let oldpwd = this.PWD;
-    if (this.PWD === undefined) {
-        //let basepath = path.join(os.tmpdir(), 'xanthippe');
+function directory(dirname, callback) {
+    let oldWorkingDirectory = this.workingDirectory;
+    console.log(oldWorkingDirectory);
+    let ret = "";
+    if (this.workingDirectory === undefined) {
         let tempdir = fs.mkdtempSync(path.join(os.tmpdir(), 'xanthippe'));
-        //let tempdir = fs.mkdirSync(path.join(os.tmpdir(), 'xanthippe'));
-        console.log(tempdir);
         fs.mkdirSync(path.join(tempdir, dirname));
-        this.PWD = path.join(tempdir, dirname);
-        console.log(this.PWD);
+        this.workingDirectory = path.join(tempdir, dirname);
+        ret = tempdir;
     } else {
-        this.PWD = path.join(this.PWD, dirname);
+        this.workingDirectory = path.join(this.workingDirectory, dirname);
+        ret = this.workingDirectory;
     }
-    console.log(this.PWD);
+    console.log(this.workingDirectory);
     try {
-        let snc = fs.statSync(this.PWD);
-        if (!snc.isDirectory(this.PWD)) {
-            /// create directory this.PWD
-            fs.mkdirSync(this.PWD);
-            //console.log('create direcotry: ' + this.PWD);
+        let snc = fs.statSync(this.workingDirectory);
+        if (!snc.isDirectory(this.workingDirectory)) {
+            fs.mkdirSync(this.workingDirectory);
         }
     } catch (e) {
-        fs.mkdirSync(this.PWD);
+        fs.mkdirSync(this.workingDirectory);
     }
 
     callback();
-    const ret = this.PWD;
-    this.PWD = oldpwd;
+    this.workingDirectory = oldWorkingDirectory;
     return ret;
 }
 
-function touch(filename, text = 'hallo') {
-    let filepath = path.join(this.PWD, filename);
+function file(filename, text = 'hallo') {
+    let filepath = path.join(this.workingDirectory, filename);
     try {
         let snc = fs.statSync(filepath);
-        console.log(`cannot create file: object with name ${filename} already exists in ${this.PWD}`);
-        // if (!fs.statSync(filepath).isFile()) {
-        //     fs.writeFileSync(filepath, text);
-        //     console.log('create file: ' + path.join(this.PWD, filename));
-        
+        console.log(`cannot create file: object with name ${filename} already exists in ${this.workingDirectory}`);        
     } catch (e) {
         fs.writeFileSync(filepath, text);
-        console.log('create file: ' + path.join(this.PWD, filename));
+        console.log('create file: ' + path.join(this.workingDirectory, filename));
     }
 
 }
 
 
-mkdir('hello', () => {
-    mkdir('hello2', () => {
-        touch('hallo.txt');
+const dirdir = directory('hello', () => {
+    directory('hello2', () => {
+        file('hallo.txt');
     });
-    mkdir('hello3', () => {
-        touch('hallo.txt');
-        touch('hallo2.txt');
-        touch('hallo2.txt');
+    directory('hello3', () => {
+        file('hallo.txt');
+        file('hallo2.txt');
+        file('hallo2.txt');
     });
-    mkdir('hello3', () => {
-        touch('halloolal');
-        touch('hallo2.txt');
+    const somedir = directory('hello3', () => {
+        file('halloolal');
+        file('hallo2.txt');
     });
-    touch('hello3');
+    file('hello3');
+    console.log(somedir);
 });
+fs.rmdirSync(dirdir, { recursive: true });
+// nix mehr da
 
-mkdir('helo', () => {
-    mkdir('helo2', () => {
-        touch('helo.js');
-    });
-});
+// directory('helo', () => {
+//     directory('helo2', () => {
+//         file('helo.js');
+//     });
+// });
