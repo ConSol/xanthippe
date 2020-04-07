@@ -4,23 +4,6 @@ const fs = require('fs');
 const chalk = require('chalk');
 const { listDir } = require('./listDir');
 
-function getCanonicalPaths(pathlist) {
-    let tempfiles = [];
-    pathlist.forEach(element => {
-        try {
-            const stat = fs.statSync(element);
-            if (stat.isDirectory()) {
-                tempfiles = tempfiles.concat(listDir(element));
-            } else {
-                tempfiles.push(element);
-            }
-        } catch (e) {
-            console.error(chalk.red(`file ${element} does not exist`));
-        }
-    });
-    return tempfiles;
-}
-
 function filterTestfiles(files) {
     const filteredfiles = [];
     files.forEach((filename, index) => {
