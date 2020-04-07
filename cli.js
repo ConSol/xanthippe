@@ -27,7 +27,7 @@ if(inputpaths.length === 0){
 }
 
 // Getting all files listed in specified directories as well as other files.
-const inputfiles = inputpaths.reduce((akk, elem) => akk.concat(listDir(elem, isRecursive)), []);
+const inputfiles = inputpaths.reduce((akk, elem) => akk.concat(listDir((elem), isRecursive)), []);
 
 //Execute xanthippe on testfile candidates.
 runFiles(filterTestfiles(inputfiles));

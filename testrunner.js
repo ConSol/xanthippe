@@ -38,6 +38,5 @@ function runFiles(lastfiles) {
 
 module.exports = {
     filterTestfiles,
-    runFiles,
-    getCanonicalPaths
+    runFiles
 }
