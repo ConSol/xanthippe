@@ -1,8 +1,7 @@
 #! /usr/bin/env node
 
 const { listDir } = require("./listDir");
-const { addDefaultDir } = require('./cli_utils.js');
-const { runFiles, filterTestfiles, getCanonicalPaths } = require('./testrunner');
+const { runFiles, filterTestfiles } = require('./testrunner');
 
 //Arguments
 let [, , ...args] = process.argv;
@@ -11,24 +10,24 @@ let [, , ...args] = process.argv;
 console.log("Xanthippe starting...");
 console.log(`Test scripts: `);
 
-let files = [];
-//Checking for --recursive, -r flag
-if (args.length === 0) {
-    args = addDefaultDir(args);
-} else {
-    args.forEach(element => {
-        if (element === '--recursive') {
-            const index = args.indexOf(element);
-            args.splice(index, 1);
-            if (args.length === 0) {
-                args = addDefaultDir(args);
-            }
-            files = listDir(args[0], true);
-        } else {
-            files = getCanonicalPaths(args);
-        }
-    });
+// Checking for recursion flag.
+let isRecursive = false;
+const inputpaths = args.filter((elem) => {
+    if (elem === '--recursive'){
+        isRecursive = true;
+        return false;
+    } else {
+        return true;
+    }
+});
+
+// If no path provided add current path as default.
+if(inputpaths.length === 0){
+    inputpaths.push(process.cwd());
 }
 
-//Execute xanthippe on testfiles
-runFiles(filterTestfiles(files));
+// Getting all files listed in specified directories as well as other files.
+const inputfiles = inputpaths.reduce((akk, elem) => akk.concat(listDir(elem, isRecursive)), []);
+
+//Execute xanthippe on testfile candidates.
+runFiles(filterTestfiles(inputfiles));
