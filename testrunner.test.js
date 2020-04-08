@@ -1,24 +1,31 @@
-const { runFiles, filterTestfiles, getCanonicalPaths } = require('./testrunner');
+const { runFiles, filterTestfiles, filterDirectories } = require('./testrunner');
+const {join} = require('path');
 
-describe('getCanonicalPaths', () => {
-
-    it('should return all filepaths under cli_test_files', () => {
+describe('filterDirectories', () => {
+    it('should filter out all subdirectories in a directorie and return only filepaths' , () => {
         //GIVEN
-        const inputPaths = ['cli_test_files'];
+        const inputList = [];
+        inputList.push(join("cli_test_files", "subfolder"));
+        inputList.push(join("cli_test_files", "subfolder_empty"));
+        inputList.push(join("cli_test_files", "test_2_cli.js"));
+        inputList.push(join("cli_test_files", "test_2_cli.xtest.js"));
+        inputList.push(join("cli_test_files", "test_cli.js"));
+        inputList.push(join("cli_test_files", "test_cli.xtest.js"));
+
+        const outputList = [];
+        outputList.push(join("cli_test_files", "test_2_cli.js"));
+        outputList.push(join("cli_test_files", "test_2_cli.xtest.js"));
+        outputList.push(join("cli_test_files", "test_cli.js"));
+        outputList.push(join("cli_test_files", "test_cli.xtest.js"));
+
 
         //WHEN
-        const result = getCanonicalPaths(inputPaths);
-        const expectedPaths = [
-            'cli_test_files/test_2_cli.js',
-            'cli_test_files/test_2_cli.xtest.js',
-            'cli_test_files/test_cli.js',
-            'cli_test_files/test_cli.xtest.js'
-        ];
+        const obtained = filterDirectories(inputList);
 
         //THEN
-        expect(result).toEqual(expectedPaths);
-    });
-});
+        expect(obtained).toEqual(outputList);
+    })
+})
 
 describe('filterTestFiles', () => {
     it('should filter out all filepaths without the xtest extension', () => {
