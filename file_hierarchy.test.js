@@ -6,7 +6,13 @@ describe('directory', () => {
     it('should return a temporary xanthippe directory', () => {
         //GIVEN
         const tempdirname = "1234"
-        const path = join(tmpdir(), 'xanthippe');
+        const path = join(tmpdir(), 'xanthippe').split("\\").map(elem => {
+            if ( elem === "\\") {
+                return "\\\\";
+            } else {
+                return elem;
+            }
+        });
         const prefix = "\^";
         const expected = new RegExp(prefix.concat(path));
 
