@@ -15,6 +15,6 @@ describe('directory', () => {
         
 
         //THEN
-        expect(rootdir).toEqual(expected);
+        expect(rootdir).toEqual(expect.stringMatching(expected));
     }) 
 })
