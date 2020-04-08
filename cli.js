@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 
 const { listDir } = require("./listDir");
-const { runFiles, filterTestfiles } = require('./testrunner');
+const { runFiles, filterTestfiles, filterDirectories } = require('./testrunner');
 
 //Arguments
 let [, , ...args] = process.argv;
@@ -10,18 +10,26 @@ let [, , ...args] = process.argv;
 console.log("Xanthippe starting...");
 console.log(`Test scripts: `);
 
-// Checking for recursion flag.
+//Checking for recursion flag.
 const recursiveFlag = "--recursive";
 const isRecursive = args.includes(recursiveFlag);
-const inputpaths = args.filter(elem => elem !== recursiveFlag);
+const inputPaths = args.filter(elem => elem !== recursiveFlag);
 
-// If no path provided add current path as default.
-if(inputpaths.length === 0){
-    inputpaths.push(process.cwd());
+//If no path provided add current path as default.
+if (inputPaths.length === 0) {
+    inputPaths.push(process.cwd());
 }
 
-// Getting all files listed in specified directories as well as other files.
-const inputfiles = inputpaths.reduce((akk, elem) => akk.concat(listDir((elem), isRecursive)), []);
+//Getting all files listed in specified directories as well as other files.
+const inputFilesAndDirectories = inputPaths.reduce((akk, elem) => akk.concat(listDir((elem), isRecursive)), []);
 
-//Execute xanthippe on testfile candidates.
-runFiles(filterTestfiles(inputfiles));
+//running xanthippe on testfiles
+runFiles(
+    //Filtering for testfile candidates
+    filterTestfiles(
+        //Filtering directories from inputFilesAndDirectories
+        filterDirectories(
+            inputFilesAndDirectories
+        )
+    )
+);
