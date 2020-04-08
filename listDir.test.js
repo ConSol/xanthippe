@@ -48,10 +48,12 @@ describe("listDirRec", () => {
         expect(result).toEqual(expectedListOutput);
     });
 
-    it('Should return all files in just a folder without descending into subfolders.', () => {
+    it('Should return all elements in just a folder without descending into subfolders.', () => {
         //GIVEN
         const absolutePathToTestFolder = join("cli_test_files");
         const expectedListOutput = [];
+        expectedListOutput.push(join("cli_test_files", "subfolder"));
+        expectedListOutput.push(join("cli_test_files", "subfolder_empty"));
         expectedListOutput.push(join("cli_test_files", "test_2_cli.js"));
         expectedListOutput.push(join("cli_test_files", "test_2_cli.xtest.js"));
         expectedListOutput.push(join("cli_test_files", "test_cli.js"));
