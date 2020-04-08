@@ -42,8 +42,13 @@ function file(filename, text = 'hallo') {
 
 }
 
+module.exports = {
+    directory,
+    file
+}
 
-const dirdir = directory('hello', () => {
+
+/* const dirdir = directory('hello', () => {
     directory('hello2', () => {
         file('hallo.txt');
     });
@@ -58,8 +63,8 @@ const dirdir = directory('hello', () => {
     });
     file('hello3');
     console.log(somedir);
-});
-fs.rmdirSync(dirdir, { recursive: true });
+}); */
+//fs.rmdirSync(dirdir, { recursive: true });
 // nix mehr da
 
 // directory('helo', () => {
