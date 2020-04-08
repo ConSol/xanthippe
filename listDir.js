@@ -10,10 +10,11 @@ function listDir(path, recurse = false) {
             } else {
                 if ( !fs.statSync(join(path,elem)).isDirectory() ){
                     return [join(path,elem)];
+                } else {
+                    return [];
                 }
             }
-        }).reduce((akk, elem) => akk.concat(elem), [])
-          .filter(elem => elem !== undefined);
+        }).reduce((akk, elem) => akk.concat(elem), []);
     } else {
         return [path];
     }
