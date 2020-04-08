@@ -4,9 +4,14 @@ const fs = require('fs');
 const chalk = require('chalk');
 const { listDir } = require('./listDir');
 
+
+function filterDirectories(filesAndDirectories) {
+    return filesAndDirectories.filter((elem) => fs.statSync(elem).isFile());
+}
+
 function filterTestfiles(files) {
     const filteredfiles = [];
-    files.forEach((filename, index) => {
+    files.forEach((filename) => {
         if (filename.match(/\.xtest\.js$/)) {
             filteredfiles.push(filename);
         }
@@ -15,7 +20,7 @@ function filterTestfiles(files) {
 
         }
     });
-    filteredfiles.forEach((elem,idx) => {
+    filteredfiles.forEach((elem, idx) => {
         console.log(`${idx}: Testing file: ${elem}`);
     });
     return filteredfiles;
@@ -38,5 +43,6 @@ function runFiles(lastfiles) {
 
 module.exports = {
     filterTestfiles,
-    runFiles
+    runFiles,
+    filterDirectories
 }
