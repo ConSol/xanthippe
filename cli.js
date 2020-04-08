@@ -11,15 +11,8 @@ console.log("Xanthippe starting...");
 console.log(`Test scripts: `);
 
 // Checking for recursion flag.
-let isRecursive = false;
-const inputpaths = args.filter((elem) => {
-    if (elem === '--recursive'){
-        isRecursive = true;
-        return false;
-    } else {
-        return true;
-    }
-});
+const isRecursive = args.includes("--recursive");
+const inputpaths = args.filter(elem => elem !== "--recursive");
 
 // If no path provided add current path as default.
 if(inputpaths.length === 0){
