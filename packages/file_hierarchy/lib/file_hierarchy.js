@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
+
+
 function directory(dirname, callback) {
     let oldWorkingDirectory = this.workingDirectory;
     console.log(oldWorkingDirectory);
