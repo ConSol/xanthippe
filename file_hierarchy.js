@@ -42,6 +42,19 @@ function file(filename, text = 'hallo') {
 
 }
 
+function cleanAll(){
+    const tmpDirContents = fs.readdirSync(os.tmpdir());
+    tmpDirContents.filter((cpath) => {
+       if( fs.statSync(os.tmpdir(), cpath).isDirectory() && cpath.match(/^xanthippe\w{6}$/) ){
+            return true;
+        } else {
+           return false;
+       }
+    }).forEach((elem) => {
+        fs.rmdirSync(path.join(os.tmpdir(), elem), { recursive: true });
+    });
+}
+
 module.exports = {
     directory,
     file
