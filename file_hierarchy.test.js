@@ -5,30 +5,32 @@ const fs = require('fs');
 
 const mymkdtempSync = fs.mkdtempSync;
 fs.mkdtempSync = jest.fn((elem) => mymkdtempSync(elem));
+const mockFunction = jest.fn(() => {});
 
 
 describe('directory', () => {
 
-    it('should call the mkdirtemp function to return a temporary xanthippe directory', () => {
+    it('should call the mkdirtemp function and the function delivered to the directory function', () => {
         //GIVEN
         const call = join(tmpdir(), 'xanthippe');
     
 
         //WHEN
-        directory('1234', () => console.log('hallo'));
+        directory('testdir', () => mockFunction());
 
 
         //THEN
         expect(fs.mkdtempSync).toHaveBeenCalledWith(call);
+        expect(mockFunction).toHaveBeenCalled();
     })
 
 
-    it('should create and return a temporary directory', () => {
+    it('should create and return a directory', () => {
         //GIVEN
-        const dirname = "testDir";
+        const dirname = "testdir";
 
         //WHEN
-        const createdDir = directory(dirname, () => console.log("hallo"));
+        const createdDir = directory(dirname, () => mockFunction());
         const isTempdir = fs.statSync(createdDir).isDirectory();
 
         //THEN
@@ -41,9 +43,12 @@ describe('directory', () => {
         const dirname = 'testdir';
 
         // //WHEN
-        const rootTmp = directory(dirname, () => console.log('hallo'));
+        const rootTmp = directory(dirname, () => mockFunction());
         const expected = tmpdir().split(sep);
+        console.log("1: " + expected)
         expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
+        console.log("2: " + expected)
+        console.log("3: " + rootTmp.split(sep))
 
         //THEN
         expect(rootTmp.split(sep)).toEqual(expected);
@@ -58,7 +63,7 @@ describe('directory', () => {
         let testdir;
         directory(dirname1, () => {
             testdir = directory(dirname2, () => {
-                console.log('hello');
+                mockFunction();
             });
         });
         const expected = tmpdir().split(sep);
@@ -68,5 +73,7 @@ describe('directory', () => {
 
         //THEN
         expect(testdir.split(sep)).toEqual(expected);
-    });
+    })
+    
+
 })
