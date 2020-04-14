@@ -5,32 +5,11 @@ const fs = require('fs');
 
 const mymkdtempSync = fs.mkdtempSync;
 fs.mkdtempSync = jest.fn((elem) => mymkdtempSync(elem));
-//fs.mkdirSync = jest.fn();
 
 
 describe('directory', () => {
-    /* it('should return a temporary xanthippe directory', () => {
-        //GIVEN
-        const tempdirname = "1234"
-        const path = "".concat(join(tmpdir(), 'xanthippe').split("\\").map(elem => {
-            if ( elem === "\\") {
-                return "\\\\";
-            } else {
-                return elem;
-            }
-        }));
-        const prefix = "\^";
-        const expected = new RegExp(prefix.concat(path));
 
-        //WHEN
-        const rootdir = directory(tempdirname, () => {console.log("Hallo")});
-        
-
-        //THEN
-        expect(rootdir).toEqual(expect.stringMatching(expected));
-    })  */
-
-    it('should return a temporary xanthippe directory', () => {
+    it('should call the mkdirtemp function to return a temporary xanthippe directory', () => {
         //GIVEN
         const call = join(tmpdir(), 'xanthippe');
     
@@ -41,5 +20,19 @@ describe('directory', () => {
 
         //THEN
         expect(fs.mkdtempSync).toHaveBeenCalledWith(call);
-    }
-)})
+    })
+
+
+    it('should create and return a temporary directory', () => {
+        //GIVEN
+        const dirname = "testDir";
+
+        //WHEN
+        const createdDir = directory(dirname, () => console.log("hallo"));
+        const isTempdir = fs.statSync(createdDir).isDirectory();
+
+        //THEN
+        expect(isTempdir).toBe(true)
+
+    })
+})
