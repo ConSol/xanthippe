@@ -1,11 +1,11 @@
-const {directory, file} = require('./file_hierarchy');
-const {join, sep} = require('path');
-const {tmpdir} = require('os');
+const { directory, file, cleanAll } = require('./file_hierarchy');
+const { join, sep } = require('path');
+const { tmpdir } = require('os');
 const fs = require('fs');
 
 const mymkdtempSync = fs.mkdtempSync;
 fs.mkdtempSync = jest.fn((elem) => mymkdtempSync(elem));
-const mockFunction = jest.fn(() => {});
+const mockFunction = jest.fn(() => { });
 
 
 describe('directory', () => {
@@ -13,7 +13,7 @@ describe('directory', () => {
     it('should call the mkdirtemp function and the function delivered to the directory function', () => {
         //GIVEN
         const call = join(tmpdir(), 'xanthippe');
-    
+
 
         //WHEN
         directory('testdir', () => mockFunction());
@@ -71,7 +71,7 @@ describe('directory', () => {
         //THEN
         expect(testdir.split(sep)).toEqual(expected);
     })
-    
+
 
 })
 
@@ -84,8 +84,8 @@ describe('file', () => {
         const text = ''
 
         //WHEN
-        const directoryWithFile = directory('testdir', () => file(filename,text));
-        const expected = fs.statSync(join(directoryWithFile,'testdir',filename)).isFile();
+        const directoryWithFile = directory('testdir', () => file(filename, text));
+        const expected = fs.statSync(join(directoryWithFile, 'testdir', filename)).isFile();
 
 
         //THEN
@@ -100,12 +100,12 @@ describe('file', () => {
 
         //WHEN
         const directoryWithFiles = directory('testdir', () => {
-            file(filename,text);
-            file(filename,text);
+            file(filename, text);
+            file(filename, text);
         });
 
         //THEN
-        expect(console.error).toHaveBeenCalledWith(`cannot create file: object with name ${filename} already exists in ${join(directoryWithFiles,"testdir")}`)
+        expect(console.error).toHaveBeenCalledWith(`cannot create file: object with name ${filename} already exists in ${join(directoryWithFiles, "testdir")}`)
     })
 
     it('should write the delivered text into the file', () => {
@@ -114,14 +114,25 @@ describe('file', () => {
 
         //WHEN
         const directoryWithFileAndText = directory('testdir', () => {
-            file('file1',text);
+            file('file1', text);
         });
-        const textInFile = fs.readFileSync(join(directoryWithFileAndText,'testdir','file1'), 'utf-8');
+        const textInFile = fs.readFileSync(join(directoryWithFileAndText, 'testdir', 'file1'), 'utf-8');
 
         //THEN
         expect(text).toEqual(textInFile);
     })
 
+    describe('cleanAll', () => {
+        it('should delete all xanthippe folders in os.tmpdir()', () => {
+            //GIVEN
+            const xantDir = directory('testdir', () => { });
 
+            //WHEN
+            cleanAll();
 
-})
+            //THEN
+            expect(() => fs.statSync(xantDir)).toThrow();
+        });
+    });
+
+});

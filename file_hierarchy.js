@@ -57,7 +57,8 @@ function cleanAll(){
 
 module.exports = {
     directory,
-    file
+    file,
+    cleanAll
 }
 
 
