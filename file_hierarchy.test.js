@@ -45,10 +45,7 @@ describe('directory', () => {
         // //WHEN
         const rootTmp = directory(dirname, () => mockFunction());
         const expected = tmpdir().split(sep);
-        console.log("1: " + expected)
         expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
-        console.log("2: " + expected)
-        console.log("3: " + rootTmp.split(sep))
 
         //THEN
         expect(rootTmp.split(sep)).toEqual(expected);
