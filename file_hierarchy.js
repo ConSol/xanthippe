@@ -34,7 +34,7 @@ function file(filename, text = 'hallo') {
     let filepath = path.join(this.workingDirectory, filename);
     try {
         let snc = fs.statSync(filepath);
-        console.log(`cannot create file: object with name ${filename} already exists in ${this.workingDirectory}`);        
+        console.error(`cannot create file: object with name ${filename} already exists in ${this.workingDirectory}`);        
     } catch (e) {
         fs.writeFileSync(filepath, text);
         console.log('create file: ' + path.join(this.workingDirectory, filename));
