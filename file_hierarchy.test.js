@@ -1,5 +1,5 @@
 const {directory} = require('./file_hierarchy');
-const {join} = require('path');
+const {join, sep} = require('path');
 const {tmpdir} = require('os');
 const fs = require('fs');
 
@@ -35,4 +35,38 @@ describe('directory', () => {
         expect(isTempdir).toBe(true)
 
     })
+
+    it('should create and return a temporary directory with name xanthippe<rand string>', () => {
+        //GIVEN
+        const dirname = 'testdir';
+
+        // //WHEN
+        const rootTmp = directory(dirname, () => console.log('hallo'));
+        const expected = tmpdir().split(sep);
+        expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
+
+        //THEN
+        expect(rootTmp.split(sep)).toEqual(expected);
+    });
+
+    it('should create and return nested directories in system temp folder', () => {
+        //GIVEN
+        const dirname1 = 'testdir1';
+        const dirname2 = 'testdir2';
+
+        //WHEN
+        let testdir;
+        directory(dirname1, () => {
+            testdir = directory(dirname2, () => {
+                console.log('hello');
+            });
+        });
+        const expected = tmpdir().split(sep);
+        expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
+        expected.push(dirname1);
+        expected.push(dirname2);
+
+        //THEN
+        expect(testdir.split(sep)).toEqual(expected);
+    });
 })
