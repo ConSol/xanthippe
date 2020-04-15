@@ -31,7 +31,7 @@ describe('directory', () => {
 
         //WHEN
         const createdDir = directory(dirname, () => mockFunction());
-        const isTempdir = fs.statSync(createdDir).isDirectory();
+        const isTempdir = fs.statSync(createdDir.dir).isDirectory();
 
         //THEN
         expect(isTempdir).toBe(true)
@@ -46,9 +46,10 @@ describe('directory', () => {
         const rootTmp = directory(dirname, () => mockFunction());
         const expected = tmpdir().split(sep);
         expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
+        expected.push(dirname);
 
         //THEN
-        expect(rootTmp.split(sep)).toEqual(expected);
+        expect(rootTmp.dir.split(sep)).toEqual(expected);
     });
 
     it('should create and return nested directories in system temp folder', () => {
@@ -69,7 +70,7 @@ describe('directory', () => {
         expected.push(dirname2);
 
         //THEN
-        expect(testdir.split(sep)).toEqual(expected);
+        expect(testdir.dir.split(sep)).toEqual(expected);
     })
 
 
