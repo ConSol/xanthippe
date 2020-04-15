@@ -122,20 +122,7 @@ describe('file', () => {
         //THEN
         expect(text).toEqual(textInFile);
     })
-
-
-
 });
-// describe('getRoot', () => {
-//     it('should return the correct xanthippe-root for a directory', () => {
-//         //GIVEN
-//         const xantDir = directory('hello', () => {});
-//         const xantDirPath = xantDir.dir;
-
-//         //WHEN
-//         const xantDirRoot = xantDir.dir.split()
-//     });
-// });
 
 describe('cleanAll', () => {
     it('should delete all xanthippe folders in os.tmpdir()', () => {
