@@ -1,4 +1,5 @@
 const xant_assert = require('./assertions.js');
+const xant_expect = require('./expect.js');
 const chalk = require('chalk');
 
 function testcase(description, callback){
@@ -16,5 +17,6 @@ module.exports = {
     assertEquals: xant_assert.assertEquals,
     assertTrue: xant_assert.assertTrue,
     testcase,
-    it: testcase
+    it: testcase,
+    expect: xant_expect.expect
 };

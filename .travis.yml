@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+    - lts/*
+branches:
+  only:
+    - master
+    - develop
+notifications:
+  email:
+    recipients:
+      - marlenek@consol.de
+      - julian.liebich@consol.de
+    on_success: never
+    on_failure: always
