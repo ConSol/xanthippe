@@ -1,46 +1,35 @@
 #! /usr/bin/env node
 
-const vm = require('vm');
-const xant = require('./core_functionality.js');
-const fs = require('fs');
-const chalk = require('chalk');
+const { listDir } = require("./listDir");
+const { runFiles, filterTestfiles, filterDirectories } = require('./testrunner');
 
-const context = {};
 //Arguments
-const [, , ...args] = process.argv;
-let index = 0;
+let [, , ...args] = process.argv;
 
 //Log
 console.log("Xanthippe starting...");
 console.log(`Test scripts: `);
 
-let filepaths = [];
+//Checking for recursion flag.
+const recursiveFlag = "--recursive";
+const isRecursive = args.includes(recursiveFlag);
+const inputPaths = args.filter(elem => elem !== recursiveFlag);
 
-args.forEach(element => {
-    try {
-        const stat = fs.statSync(element);
-        if (!stat.isDirectory()) {
-            index++;
-            filepaths.push(element);
-            console.log(` ${index}: ${element}`);
-        } else {
-            console.error(chalk.red(`${element} is a directory`));
-        }
-    } catch (e) {
-        console.error(chalk.red(`file ${element} does not exist`));
-    }
-});
+//If no path provided add current path as default.
+if (inputPaths.length === 0) {
+    inputPaths.push(process.cwd());
+}
 
-filepaths.forEach(filepath => {
-    console.log('Running testsuite: ' + filepath);
-    const code = fs.readFileSync(filepath, 'utf-8');
-    const context = { ...{ console: console, require: require }, ...xant };
-    vm.createContext(context);
-    try {
-        vm.runInContext(code, context);
-        console.log(chalk.green('... Testsuite passed correctly.'));
-    } catch (e) {
-        console.error(chalk.magenta(e.stack));
-        break;
-    }
-});
+//Getting all files listed in specified directories as well as other files.
+const inputFilesAndDirectories = inputPaths.reduce((akk, elem) => akk.concat(listDir((elem), isRecursive)), []);
+
+//running xanthippe on testfiles
+runFiles(
+    //Filtering for testfile candidates
+    filterTestfiles(
+        //Filtering directories from inputFilesAndDirectories
+        filterDirectories(
+            inputFilesAndDirectories
+        )
+    )
+);
