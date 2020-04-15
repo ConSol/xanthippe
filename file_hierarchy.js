@@ -3,6 +3,9 @@ const path = require('path');
 const os = require('os');
 
 function directory(dirname, callback) {
+    if(dirname === ''){
+        throw "Name of directory must not be empty!";
+    }
     let oldWorkingDirectory = this.workingDirectory;
     console.log(oldWorkingDirectory);
     if (this.workingDirectory === undefined) {
@@ -31,10 +34,12 @@ function directory(dirname, callback) {
     const ret = {
         dir: this.workingDirectory,
         deleteTree: () => {
-            const delpath = path.join(os.tmpdir(), directoryPath.split(path.sep).find((elem) => {
+            fs.rmdirSync(ret.getRoot(), { recursive: true });
+        },
+        getRoot: () => {
+            return path.join(os.tmpdir(), directoryPath.split(path.sep).find((elem) => {
                 return elem.match(/^xanthippe\w{6}$/);
             }));
-            fs.rmdirSync(delpath, { recursive: true });
         }
     };
     this.workingDirectory = oldWorkingDirectory;
@@ -72,6 +77,7 @@ module.exports = {
     cleanAll
 }
 
+let dir4;
 const dirdir = directory('hello', () => {
     directory('hello2', () => {
         file('hallo.txt');
@@ -81,11 +87,11 @@ const dirdir = directory('hello', () => {
         file('hallo2.txt');
         file('hallo2.txt');
     });
-    const somedir = directory('hello3', () => {
+    dir4 = directory('hello3', () => {
         file('halloolal');
         file('hallo2.txt');
     });
     file('hello3');
 });
-
+console.log(dir4.getRoot());
 dirdir.deleteTree();
