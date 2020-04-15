@@ -85,7 +85,7 @@ describe('file', () => {
 
         //WHEN
         const directoryWithFile = directory('testdir', () => file(filename, text));
-        const expected = fs.statSync(join(directoryWithFile, 'testdir', filename)).isFile();
+        const expected = fs.statSync(join(directoryWithFile.dir, filename)).isFile();
 
 
         //THEN
@@ -105,7 +105,7 @@ describe('file', () => {
         });
 
         //THEN
-        expect(console.error).toHaveBeenCalledWith(`cannot create file: object with name ${filename} already exists in ${join(directoryWithFiles, "testdir")}`)
+        expect(console.error).toHaveBeenCalledWith(`cannot create file: object with name ${filename} already exists in ${directoryWithFiles.dir}`)
     })
 
     it('should write the delivered text into the file', () => {
@@ -116,7 +116,7 @@ describe('file', () => {
         const directoryWithFileAndText = directory('testdir', () => {
             file('file1', text);
         });
-        const textInFile = fs.readFileSync(join(directoryWithFileAndText, 'testdir', 'file1'), 'utf-8');
+        const textInFile = fs.readFileSync(join(directoryWithFileAndText.dir, 'file1'), 'utf-8');
 
         //THEN
         expect(text).toEqual(textInFile);
@@ -131,7 +131,7 @@ describe('file', () => {
             cleanAll();
 
             //THEN
-            expect(() => fs.statSync(xantDir)).toThrow();
+            expect(() => fs.statSync(xantDir.dir)).toThrow();
         });
     });
 
