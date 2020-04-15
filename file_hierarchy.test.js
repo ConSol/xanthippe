@@ -132,7 +132,34 @@ describe('file', () => {
             cleanAll();
 
             //THEN
-            expect(() => fs.statSync(xantDir.dir)).toThrow();
+            expect(() => fs.statSync(xantDir.getRoot())).toThrow();
+        });
+    });
+
+    describe('deleteTree', () => {
+        it('should delete a directorys xanthippe root recursively', () => {
+            //GIVEN
+            const xantDir = directory('hallo', () => { });
+
+            //WHEN
+            xantDir.deleteTree();
+
+            //THEN
+            expect(() => fs.statSync(xantDir.getRoot())).toThrow();
+        });
+
+        it('should delete a the xanthippe root of a nested directory', () => {
+            //GIVEN
+            let xantDir;
+            directory('hallo', () => {
+                xantDir = directory('hello', () => { });
+            });
+
+            //WHEN
+            xantDir.deleteTree();
+
+            //THEN
+            expect(() => fs.statSync(xantDir.getRoot())).toThrow();
         });
     });
 
