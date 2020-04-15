@@ -123,44 +123,56 @@ describe('file', () => {
         expect(text).toEqual(textInFile);
     })
 
-    describe('cleanAll', () => {
-        it('should delete all xanthippe folders in os.tmpdir()', () => {
-            //GIVEN
-            const xantDir = directory('testdir', () => { });
 
-            //WHEN
-            cleanAll();
 
-            //THEN
-            expect(() => fs.statSync(xantDir.getRoot())).toThrow();
-        });
+});
+// describe('getRoot', () => {
+//     it('should return the correct xanthippe-root for a directory', () => {
+//         //GIVEN
+//         const xantDir = directory('hello', () => {});
+//         const xantDirPath = xantDir.dir;
+
+//         //WHEN
+//         const xantDirRoot = xantDir.dir.split()
+//     });
+// });
+
+describe('cleanAll', () => {
+    it('should delete all xanthippe folders in os.tmpdir()', () => {
+        //GIVEN
+        const xantDir = directory('testdir', () => { });
+
+        //WHEN
+        cleanAll();
+
+        //THEN
+        expect(() => fs.statSync(xantDir.getRoot())).toThrow();
+    });
+});
+
+describe('deleteTree', () => {
+    it('should delete a directorys xanthippe root recursively', () => {
+        //GIVEN
+        const xantDir = directory('hallo', () => { });
+
+        //WHEN
+        xantDir.deleteTree();
+
+        //THEN
+        expect(() => fs.statSync(xantDir.getRoot())).toThrow();
     });
 
-    describe('deleteTree', () => {
-        it('should delete a directorys xanthippe root recursively', () => {
-            //GIVEN
-            const xantDir = directory('hallo', () => { });
-
-            //WHEN
-            xantDir.deleteTree();
-
-            //THEN
-            expect(() => fs.statSync(xantDir.getRoot())).toThrow();
+    it('should delete a the xanthippe root of a nested directory', () => {
+        //GIVEN
+        let xantDir;
+        directory('hallo', () => {
+            xantDir = directory('hello', () => { });
         });
 
-        it('should delete a the xanthippe root of a nested directory', () => {
-            //GIVEN
-            let xantDir;
-            directory('hallo', () => {
-                xantDir = directory('hello', () => { });
-            });
+        //WHEN
+        xantDir.deleteTree();
 
-            //WHEN
-            xantDir.deleteTree();
-
-            //THEN
-            expect(() => fs.statSync(xantDir.getRoot())).toThrow();
-        });
+        //THEN
+        expect(() => fs.statSync(xantDir.getRoot())).toThrow();
     });
-
 });
