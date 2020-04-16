@@ -1,6 +1,8 @@
 language: node_js
 node_js:
     - lts/*
+before_script:
+    - mkdir cli_test_files/subfolder_empty
 branches:
   only:
     - master
