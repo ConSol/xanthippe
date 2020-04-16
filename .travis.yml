@@ -7,7 +7,6 @@ branches:
   only:
     - master
     - develop
-    - setup/18/travis
 notifications:
   email:
     recipients:
