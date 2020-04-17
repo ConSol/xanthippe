@@ -8,10 +8,17 @@ const obj2 = {
     var2: 2
 }
 
-beforeEach(() => console.log("I wanna be called before each testcase"));
+let testVariable;
+
+beforeEach(() => {
+    console.log("I wanna be called before each testcase")
+    testVariable = 1;
+});
+
 afterEach(() => console.log("I wanna be called after each testcase"));
 
 testcase('1 should be 1', () => {
+    console.log(testVariable);
     assertEquals(obj1,obj2);
 });
 
