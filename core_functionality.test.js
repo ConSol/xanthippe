@@ -78,7 +78,7 @@ describe('xant.testcase: ', () => {
 });
 
 describe('beforeEach', () => {
-    it('should excecute a function before each testrun', () => {
+    it('should execute a function before each testrun', () => {
         //GIVEN
         const dummyFunction = jest.fn();
         
@@ -88,6 +88,25 @@ describe('beforeEach', () => {
 
         //THEN
         expect(dummyFunction).toHaveBeenCalled();
+    })
+
+    it('should execute a function before each testrun correctly', () => {
+        //GIVEN
+        let testVariable;
+        let isOne = false;
+        const dummyFunction = () => {
+            testVariable = 1;
+        };
+
+        //WHEN
+        xant.beforeEach(dummyFunction);
+        xant.testcase('test',() => {
+            isOne = testVariable === 1;
+        });
+
+        //THEN
+        expect(testVariable).toBe(1);
+        expect(isOne).toBe(true);
     })
 });
 
