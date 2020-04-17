@@ -76,3 +76,34 @@ describe('xant.testcase: ', () => {
     })
 
 });
+
+describe('beforeEach', () => {
+    it('should excecute a function before each testrun', () => {
+        //GIVEN
+        const dummyFunction = jest.fn();
+        
+        //WHEN
+        xant.beforeEach(dummyFunction);
+        xant.testcase('test', () => {});
+
+        //THEN
+        expect(dummyFunction).toHaveBeenCalled();
+    })
+});
+
+describe('afterEach', () => {
+
+    it('should execute a function after each testrun', () => {
+        //GIVEN
+        const dummyFunction = jest.fn();
+
+        //WHEN
+        xant.afterEach(dummyFunction);
+        xant.testcase('test', () => {});
+
+        //THEN
+        expect(dummyFunction).toHaveBeenCalled();
+
+    });
+
+});
