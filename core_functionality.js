@@ -14,14 +14,14 @@ function testcase(description, callback) {
         }
         callback();
 
-        if (afterEachFunction !== undefined) {
-            afterEachFunction();
-        }
     } catch (e) {
         console.error(chalk.red.inverse.bold("... test failed!"));
         throw e;
     }
     console.log(chalk.green.inverse.bold("... test succeeded"));
+    if (afterEachFunction !== undefined) {
+        afterEachFunction();
+    }
 }
 
 function beforeEach(callback) {
