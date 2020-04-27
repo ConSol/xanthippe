@@ -71,10 +71,10 @@ describe('directory', () => {
 
         //WHEN
         let testdir;
-        directory(dirname1, () => {
+        directory(dirname1, (workingDirectory) => {
             testdir = directory(dirname2, () => {
                 mockFunction();
-            });
+            }, workingDirectory );
         });
         const expected = tmpdir().split(sep);
         expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
@@ -97,7 +97,7 @@ describe('file', () => {
         const text = ''
 
         //WHEN
-        const directoryWithFile = directory('testdir', () => file(filename, text));
+        const directoryWithFile = directory('testdir', (workingDirectory) => file(filename, text, workingDirectory));
         const expected = fs.statSync(join(directoryWithFile.dir, filename)).isFile();
 
 
@@ -112,9 +112,9 @@ describe('file', () => {
         console.error = jest.fn();
 
         //WHEN
-        const directoryWithFiles = directory('testdir', () => {
-            file(filename, text);
-            file(filename, text);
+        const directoryWithFiles = directory('testdir', (workingDirectory) => {
+            file(filename, text, workingDirectory);
+            file(filename, text, workingDirectory);
         });
 
         //THEN
@@ -126,8 +126,8 @@ describe('file', () => {
         text = "This is the text we expect to be in the file"
 
         //WHEN
-        const directoryWithFileAndText = directory('testdir', () => {
-            file('file1', text);
+        const directoryWithFileAndText = directory('testdir', (workingDirectory) => {
+            file('file1', text, workingDirectory);
         });
         const textInFile = fs.readFileSync(join(directoryWithFileAndText.dir, 'file1'), 'utf-8');
 
