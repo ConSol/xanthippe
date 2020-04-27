@@ -24,6 +24,18 @@ describe('directory', () => {
         expect(mockFunction).toHaveBeenCalled();
     })
 
+    it("should call the mkdirtemp function and the function delivered to the directory function", () => {
+        //GIVEN
+        const call = join(tmpdir(), "xanthippe");
+
+        //WHEN
+        workingDirectory = "foo";
+        directory("testdir", () => mockFunction());
+
+        //THEN
+        expect(fs.mkdtempSync).toHaveBeenCalledWith(call);
+        expect(mockFunction).toHaveBeenCalled();
+      });
 
     it('should create and return a directory', () => {
         //GIVEN
