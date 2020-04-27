@@ -7,12 +7,12 @@ function directory(dirname, callback, workingDirectory) {
         throw "Name of directory must not be empty!";
     }
 
-    if(workingDirectory === undefined ){
-            workingDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'xanthippe'));
+    if (workingDirectory === undefined) {
+        workingDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'xanthippe'));
     } else {
         if (workingDirectory.split(path.sep).find((elem) => {
             return elem.match(/^xanthippe\w{6}$/);
-        }) === undefined ) {
+        }) === undefined) {
             throw "WorkingDirectory not in a xanthippe directory";
         }
     }
@@ -25,7 +25,7 @@ function directory(dirname, callback, workingDirectory) {
     }
 
     callback(currentDir);
-    
+
     const ret = {
         dir: currentDir,
         deleteTree: () => {
@@ -65,8 +65,24 @@ function cleanAll() {
     });
 }
 
+function directoryRec( dirnames, callback, workingDirectory=undefined ) {
+    if(dirnames.length === 0){
+        throw "dirnames empty";
+    }
+    let cwd = dirnames.shift();
+    if ( dirnames.length > 0 ) {
+        directory(cwd, (workingDirectory) => {
+            directoryRec(dirnames, callback, workingDirectory);
+        }, workingDirectory);
+    } else {
+        directory(cwd, callback, workingDirectory);
+    }
+}
+
 module.exports = {
     directory,
     file,
-    cleanAll
+    cleanAll,
+    directoryRec
 }
+
