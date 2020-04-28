@@ -70,13 +70,15 @@ function directoryRec( dirnames, callback, workingDirectory=undefined ) {
         throw "dirnames empty";
     }
     let cwd = dirnames.shift();
+    let ret;
     if ( dirnames.length > 0 ) {
         directory(cwd, (workingDirectory) => {
-            directoryRec(dirnames, callback, workingDirectory);
+            ret = directoryRec(dirnames, callback, workingDirectory);
         }, workingDirectory);
     } else {
-        directory(cwd, callback, workingDirectory);
+        ret = directory(cwd, callback, workingDirectory);
     }
+    return ret;
 }
 
 module.exports = {
