@@ -1,4 +1,4 @@
-const { directory, file, cleanAll } = require('./file_hierarchy');
+const { directory, file, cleanAll, directoryRec } = require('./file_hierarchy');
 const { join, sep } = require('path');
 const { tmpdir } = require('os');
 const fs = require('fs');
@@ -24,6 +24,18 @@ describe('directory', () => {
         expect(mockFunction).toHaveBeenCalled();
     })
 
+    it("should call the mkdirtemp function and the function delivered to the directory function", () => {
+        //GIVEN
+        const call = join(tmpdir(), "xanthippe");
+
+        //WHEN
+        workingDirectory = "foo";
+        directory("testdir", () => mockFunction());
+
+        //THEN
+        expect(fs.mkdtempSync).toHaveBeenCalledWith(call);
+        expect(mockFunction).toHaveBeenCalled();
+    });
 
     it('should create and return a directory', () => {
         //GIVEN
@@ -59,10 +71,10 @@ describe('directory', () => {
 
         //WHEN
         let testdir;
-        directory(dirname1, () => {
+        directory(dirname1, (workingDirectory) => {
             testdir = directory(dirname2, () => {
                 mockFunction();
-            });
+            }, workingDirectory);
         });
         const expected = tmpdir().split(sep);
         expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
@@ -85,7 +97,7 @@ describe('file', () => {
         const text = ''
 
         //WHEN
-        const directoryWithFile = directory('testdir', () => file(filename, text));
+        const directoryWithFile = directory('testdir', (workingDirectory) => file(filename, text, workingDirectory));
         const expected = fs.statSync(join(directoryWithFile.dir, filename)).isFile();
 
 
@@ -100,9 +112,9 @@ describe('file', () => {
         console.error = jest.fn();
 
         //WHEN
-        const directoryWithFiles = directory('testdir', () => {
-            file(filename, text);
-            file(filename, text);
+        const directoryWithFiles = directory('testdir', (workingDirectory) => {
+            file(filename, text, workingDirectory);
+            file(filename, text, workingDirectory);
         });
 
         //THEN
@@ -114,8 +126,8 @@ describe('file', () => {
         text = "This is the text we expect to be in the file"
 
         //WHEN
-        const directoryWithFileAndText = directory('testdir', () => {
-            file('file1', text);
+        const directoryWithFileAndText = directory('testdir', (workingDirectory) => {
+            file('file1', text, workingDirectory);
         });
         const textInFile = fs.readFileSync(join(directoryWithFileAndText.dir, 'file1'), 'utf-8');
 
@@ -162,4 +174,62 @@ describe('deleteTree', () => {
         //THEN
         expect(() => fs.statSync(xantDir.getRoot())).toThrow();
     });
+});
+
+describe('directoryRec', () => {
+    it('should create a directory and return its path', () => {
+        //GIVEN
+        const dirname = ["testdir"];
+
+        //WHEN
+        const createdDir = directoryRec(dirname, () => mockFunction());
+        const isTempdir = fs.statSync(createdDir.dir).isDirectory();
+
+        //THEN
+        expect(isTempdir).toBe(true)
+    });
+
+    it('should throw an error if no directory names are specified', () => {
+        //GIVEN
+        const dirname = [];
+
+        //WHEN
+        const createdDir = () => directoryRec(dirname, () => mockFunction());
+
+        //THEN
+        expect(createdDir).toThrow();
+    });
+
+    it('should throw an error if a workingDirectory parameter is passed to the outer-most function invocation', () => {
+        //GIVEN
+        const dirname = ['tick', 'trick', 'track'];
+
+        //WHEN
+        const createdDir = () => directoryRec(dirname, () => { }, 'abacadabra');
+
+        //THEN
+        expect(createdDir).toThrow();
+    });
+
+    it('should create a series of nested directories', () => {
+        //GIVEN
+        const dirnames = ['tick', 'trick', 'track'];
+        const expDirNames = [...dirnames];
+        //WHEN
+        const createdDir = directoryRec(dirnames, () => {});
+
+        let expected = tmpdir().split(sep);
+        expected.push(expect.stringMatching(/^xanthippe\w{6}$/));
+        expected.push(expDirNames[0]);
+        expected.push(expDirNames[1]);
+        expected.push(expDirNames[2]);
+        const isTempdir = fs.statSync(createdDir.dir).isDirectory();
+
+        //THEN
+        expect(createdDir.dir.split(sep)).toEqual(expected);
+        expect(isTempdir).toBe(true);
+
+        expected.deleteTree();
+    });
+
 });
