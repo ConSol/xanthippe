@@ -1,4 +1,4 @@
-const { directory, file, cleanAll } = require('./file_hierarchy');
+const { directory, file, cleanAll, filestructure } = require('./file_hierarchy');
 const { join, sep } = require('path');
 const { tmpdir } = require('os');
 const fs = require('fs');
@@ -7,6 +7,68 @@ const mymkdtempSync = fs.mkdtempSync;
 fs.mkdtempSync = jest.fn((elem) => mymkdtempSync(elem));
 const mockFunction = jest.fn(() => { });
 
+describe('filestructure', () => {
+
+    it('should make a filestructure', () => {
+        //GIVEN
+        const layout = {
+            'directory' : {
+                'directory2' : {
+
+                }
+            }
+        }
+
+        //WHEN
+        const dirdir = filestructure(layout);
+        const expected = join(dirdir.getRoot(), 'directory', 'directory2');
+        
+
+        //THEN
+        expect(fs.statSync(expected).isDirectory()).toBe(true);
+        
+    })
+
+    it('should create files in directory structure', () => {
+        //GIVEN
+        const layout = {
+            'directory' : {
+                'directory2' : {
+                    'file1' : 'content'
+
+                }
+            }
+        }
+
+        //WHEN
+        const dirdir = filestructure(layout);
+        const expected = join(dirdir.getRoot(), 'directory', 'directory2', 'file1');
+        
+
+        //THEN
+        expect(fs.statSync(expected).isFile()).toBe(true);
+    })
+
+    it('should create a file outside a directory structure', () => {
+        const layout = {
+            'directory' : {
+                'directory2' : {
+
+                }
+            },
+            'file1' : 'content'
+        }
+
+        //WHEN
+        const dirdir = filestructure(layout);
+        const expected = join(dirdir.getRoot(),'file1');
+
+        //THEN
+        expect(fs.statSync(expected).isFile()).toBe(true);
+
+
+    })
+})
 
 describe('directory', () => {
 
